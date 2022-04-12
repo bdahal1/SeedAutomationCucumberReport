@@ -47,7 +47,7 @@ public class ConfigurationHelper {
     private static RunConfig getRunConfig() {
         if (runConfig == null) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/Run.config"));
+                BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/configs/Run.config"));
                 Gson gson = new Gson();
                 runConfig = gson.fromJson(reader, RunConfig.class);
             } catch (FileNotFoundException e) {
@@ -61,7 +61,7 @@ public class ConfigurationHelper {
     private static EnvironmentConfig getEnvironmentConfig() {
         if (environmentConfig == null) {
             try {
-                BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/Environment.config"));
+                BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/configs/Environment.config"));
                 Gson gson = new Gson();
                 environmentConfig = gson.fromJson(reader, EnvironmentConfig.class);
             } catch (FileNotFoundException e) {

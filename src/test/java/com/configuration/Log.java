@@ -1,13 +1,12 @@
 package com.configuration;
 
-import com.google.common.io.Files;
 import io.cucumber.java.Scenario;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 public class Log {
 
@@ -80,17 +79,13 @@ public class Log {
             File destinationPath = new File("output/screenshots/" + featureName + "/" + screenshotName + ".png");
             destinationPath.getParentFile().mkdir();
             destinationPath.createNewFile();
-            Files.copy(screenshotFile, destinationPath);
-            FileInputStream fl = new FileInputStream(destinationPath);
-            byte[] arr = new byte[(int) destinationPath.length()];
-            fl.read(arr);
-            fl.close();
-            scenario.attach(arr, "image/png", screenshotFile.getName());
-//            Reporter.addScreenCaptureFromPath("screenshots/" + featureName + "/" + screenshotName + ".png");
+            FileUtils.copyFile(screenshotFile, destinationPath);
+            byte[] fileContent = FileUtils.readFileToByteArray(destinationPath);
+            scenario.attach(fileContent,"image/png","");
         } catch (Exception e) {
             try {
                 Log.logError(e);
-//                Reporter.addStepLog("<font color='red'><bold>Unable to take a Screenshot</bold></font>");
+                scenario.log("<font color='red'><bold>Unable to take a Screenshot</bold></font>");
             } catch (NullPointerException f) {
                 Log.logError(f);
             }
